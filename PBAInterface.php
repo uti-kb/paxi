@@ -1,4 +1,5 @@
 <?php
+namespace hakger\paxi;
 require_once dirname(__FILE__).'/XMLRPCClient.php';
 
 class PBAException extends Exception {}

@@ -1,5 +1,5 @@
 <?php
-
+namespace hakger\paxi;
 class XmlRpcClientException extends Exception {
 	public function __construct($message, $code, $previous) {
 		if(is_array($message)){
