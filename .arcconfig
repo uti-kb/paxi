@@ -1,4 +1,4 @@
 {
   "project.name" : "PA XMLRPC Interface",
-  "phabricator.uri" : "http://phabricator.hakgersoft.pl/"
+  "phabricator.uri" : "https://phabricator.hakgersoft.pl/"
 }
