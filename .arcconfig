@@ -1,4 +1,6 @@
 {
   "project.name" : "PA XMLRPC Interface",
-  "phabricator.uri" : "https://phabricator.hakgersoft.pl/"
+  "phabricator.uri" : "https://phabricator.hakgersoft.pl/",
+  "unit.engine": "PhpunitTestEngine",
+  "phpunit_config": "phpunit.xml"
 }

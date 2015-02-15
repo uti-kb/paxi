@@ -1,0 +1,77 @@
+{
+  "exclude": [
+    "(^vendor/)"
+  ],
+  "linters": {
+    "filename": {
+      "type": "filename"
+    },
+    "generated": {
+      "type": "generated"
+    },
+    "json": {
+      "type": "json",
+      "include": [
+        "(^\\.arcconfig$)",
+        "(^\\.arclint$)",
+        "(\\.json$)"
+      ]
+    },
+    "merge-conflict": {
+      "type": "merge-conflict"
+    },
+    "nolint": {
+      "type": "nolint"
+    },
+    "text": {
+      "type": "text",
+      "severity": {
+        "5" : "disabled"
+      },
+      "exclude": [
+        "(^\\.arclint$)"
+      ]
+    },
+    "text-without-length": {
+      "type": "text",
+      "severity": {
+        "3": "disabled"
+      },
+      "include": [
+        "(^\\.arclint$)"
+      ]
+    },
+    "spelling": {
+      "type": "spelling"
+    },
+    "phpcs": {
+      "type": "phpcs",
+      "include": "(\\.php)",
+      "phpcs.standard": "PSR2",
+      "severity.rules": {
+        "(^PHPCS\\.E\\.)": "warning",
+        "(^PHPCS\\.W\\.)": "advice"
+      }
+    },
+    "xhpast": {
+      "type": "xhpast",
+      "include": "(\\.php$)",
+      "exclude": [
+        "(^tests/)"
+      ],
+      "severity": {
+        "9" : "disabled",
+        "16": "advice",
+        "24": "disabled",
+        "34": "error",
+        "37": "disabled",
+        "44": "disabled"
+      },
+      "xhpast.blacklisted.function": {
+        "eval": "The eval() function should be avoided. It is potentially unsafe and makes debugging more difficult."
+      },
+      "xhpast.php-version": "5.3.3",
+      "xhpast.php-version.windows": "5.3.0"
+    }
+  }
+}
