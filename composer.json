@@ -1,0 +1,10 @@
+{
+  "name": "Hakger/Paxi",
+  "description": "??",
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Hakger\\Paxi\\": "src"
+    }
+  }
+}
