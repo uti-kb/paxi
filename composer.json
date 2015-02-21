@@ -1,7 +1,20 @@
 {
-  "name": "Hakger/Paxi",
-  "description": "??",
+  "name": "hakger/paxi",
+  "description": "PA XMLRPC Interface",
+  "license": "proprietary",
+  "keywords": ["PAXI"],
+  "authors": [
+      {
+          "name": "Hubert Kowalski",
+          "email": "h.kowalski@hakger.pl"
+      },
+      {
+          "name": "Grzegorz Bernat",
+          "email": "g.bernat@hakgersoft.pl"
+      }
+  ],
   "require": {},
+  "require-dev": {},
   "autoload": {
     "psr-4": {
       "Hakger\\Paxi\\": "src"
