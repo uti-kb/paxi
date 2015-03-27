@@ -1,6 +1,6 @@
 <?php
-namespace Hakger\Paxi;
 
+namespace Hakger\Paxi;
 
 /**
  * Description of POAInterface
@@ -9,7 +9,6 @@ namespace Hakger\Paxi;
  */
 class POAInterface
 {
-
     // configuration
 
     /**
@@ -17,7 +16,7 @@ class POAInterface
      *
      * @var string
      */
-    private $RPC_URL = 'http://192.168.128.91:8440/RPC2';
+    private $rpc_url; // = 'http://192.168.128.91:8440/RPC2';
 
     /**
      * tu należy podać dane do logowania do api w formacie "user:pass"
@@ -32,43 +31,54 @@ class POAInterface
     // implementation
 
     /**
-     * klient xml do głównego namespace.
-     *
-     * @var XMLRPCClient
+     * @var Array Array klientów xmlRpc.
      */
     private $xml_client;
 
-    /**
-     * Klient xml do namespace qmail
-     *
-     * @var XMLRPCClient
-     */
-    private $xml_qmail;
-
-    /**
-     *Klient xml do namespace APS
-     * @var type
-     */
-    private $xml_APS;
-
-
-    public function __construct()
+    public function __construct($url = '', $api_access = false)
     {
-        $this->xml_client = new XMLRPCClient(
-            $this->RPC_URL,
-            'pem',
-            $this->api_access
-        );
-        $this->xml_qmail = new XMLRPCClient(
-            $this->RPC_URL,
-            'pem.cqmail',
-            $this->api_access
-        );
-        $this->xml_APS = new XMLRPCClient(
-            $this->RPC_URL,
-            'pem.APS',
-            $this->api_access
-        );
+        $this->api_access = $api_access;
+        if (!empty($url) && filter_var($url, FILTER_VALIDATE_URL) !== false) {
+            $this->rpc_url = $url;
+            $this->xml_client['pem'] = new XMLRPCClient(
+                $this->rpc_url,
+                'pem',
+                $this->api_access
+            );
+            $this->xml_client['pem.cqmail'] = new XMLRPCClient(
+                $this->rpc_url,
+                'pem.cqmail',
+                $this->api_access
+            );
+            $this->xml_client['pem.APS'] = new XMLRPCClient(
+                $this->rpc_url,
+                'pem.APS',
+                $this->api_access
+            );
+        }
+    }
+
+    public function setUrl($url)
+    {
+        if (!empty($url) && filter_var($url, FILTER_VALIDATE_URL) !== false) {
+            $this->xml_client['pem'] = new XMLRPCClient(
+                $this->rpc_url,
+                'pem',
+                $this->api_access
+            );
+            $this->xml_client['pem.cqmail'] = new XMLRPCClient(
+                $this->rpc_url,
+                'pem.cqmail',
+                $this->api_access
+            );
+            $this->xml_client['pem.APS'] = new XMLRPCClient(
+                $this->rpc_url,
+                'pem.APS',
+                $this->api_access
+            );
+        } else {
+            throw new PBAException("URL '$url' is invalid!");
+        }
     }
 
     private function checkRestStatus(&$ret)
@@ -82,146 +92,149 @@ class POAInterface
 
     public function activateSubscription(array $params)
     {
-        $ret = $this->xml_client->activateSubscription($params);
+        $ret = $this->xml_client['pem']->activateSubscription($params);
         $this->checkRestStatus($ret);
         return $ret;
     }
 
     public function addSubscription(array $params)
     {
-        $ret =  $this->xml_client->addSubscription($params);
+        $ret = $this->xml_client['pem']->addSubscription($params);
         $this->checkRestStatus($ret);
         return $ret;
     }
 
     public function addDomain(array $params)
     {
-        $ret =  $this->xml_client->addDomain($params);
+        $ret = $this->xml_client['pem']->addDomain($params);
         $this->checkRestStatus($ret);
         return $ret;
     }
 
     public function bindServicesToDomain(array $params)
     {
-        $ret =  $this->xml_client->bindServicesToDomain($params);
+        $ret = $this->xml_client['pem']->bindServicesToDomain($params);
         $this->checkRestStatus($ret);
         return $ret;
     }
+
     public function unbindServicesFromDomain(array $params)
     {
-        $ret =  $this->xml_client->unbindServicesFromDomain($params);
+        $ret = $this->xml_client['pem']->unbindServicesFromDomain($params);
         $this->checkRestStatus($ret);
         return $ret;
     }
 
     public function addMailbox(array $params)
     {
-        $ret =  $this->xml_qmail->addMailbox($params);
+        $ret = $this->xml_client['pem.cqmail']->addMailbox($params);
         $this->checkRestStatus($ret);
         return $ret;
     }
 
     public function addMailForwarding(array $params)
     {
-        $ret =  $this->xml_qmail->addMailForwarding($params);
+        $ret = $this->xml_client['pem.cqmail']->addMailForwarding($params);
         $this->checkRestStatus($ret);
         return $ret;
     }
 
     public function editMailname(array $params)
     {
-        $ret =  $this->xml_qmail->editMailname($params);
+        $ret = $this->xml_client['pem.cqmail']->editMailname($params);
         $this->checkRestStatus($ret);
         return $ret;
     }
 
     public function editMailAddresses(array $params)
     {
-        $ret =  $this->xml_qmail->editEmailAddresses($params);
+        $ret = $this->xml_client['pem.cqmail']->editEmailAddresses($params);
         $this->checkRestStatus($ret);
         return $ret;
     }
 
     public function getSubscriptionWebspaces(array $params)
     {
-        $ret = $this->xml_client->getSubscriptionWebspaces($params);
+        $ret = $this->xml_client['pem']->getSubscriptionWebspaces($params);
         $this->checkRestStatus($ret);
         return $ret;
     }
 
     public function getWebspacesList(array $params)
     {
-        $ret = $this->xml_client->getWebspacesList($params);
+        $ret = $this->xml_client['pem']->getWebspacesList($params);
         $this->checkRestStatus($ret);
         return $ret;
     }
 
     public function getAccountInfo(array $params)
     {
-        $ret = $this->xml_client->getAccountInfo($params);
+        $ret = $this->xml_client['pem']->getAccountInfo($params);
         $this->checkRestStatus($ret);
         return $ret;
     }
 
     public function assignRolesToMember(array $params)
     {
-        $ret = $this->xml_client->assignRolesToMember($params);
+        $ret = $this->xml_client['pem']->assignRolesToMember($params);
         $this->checkRestStatus($ret);
         return $ret;
     }
 
     public function getUsers(array $params)
     {
-        $ret = $this->xml_client->getUsers($params);
+        $ret = $this->xml_client['pem']->getUsers($params);
         $this->checkRestStatus($ret);
         return $ret;
     }
 
     public function getUserByLogin(array $params)
     {
-        $ret = $this->xml_client->getUserByLogin($params);
+        $ret = $this->xml_client['pem']->getUserByLogin($params);
         $this->checkRestStatus($ret);
         return $ret;
     }
 
     public function modifyUser(array $params)
     {
-        $ret = $this->xml_client->modifyUser($params);
+        $ret = $this->xml_client['pem']->modifyUser($params);
         $this->checkRestStatus($ret);
         return $ret;
     }
 
     public function getSubscription(array $params)
     {
-        $ret = $this->xml_client->getSubscription($params);
+        $ret = $this->xml_client['pem']->getSubscription($params);
         $this->checkRestStatus($ret);
         return $ret;
     }
 
     public function addDNSHosting(array $params)
     {
-        $ret = $this->xml_client->addDNSHosting($params);
+        $ret = $this->xml_client['pem']->addDNSHosting($params);
         $this->checkRestStatus($ret);
         return $ret;
     }
 
     public function addDNSRecord(array $params)
     {
-        $ret = $this->xml_client->createDNSRecord($params);
+        $ret = $this->xml_client['pem']->createDNSRecord($params);
         $this->checkRestStatus($ret);
         return $ret;
     }
 
     public function delDNSRecord(array $params)
     {
-        $ret = $this->xml_client->deleteDNSRecord($params);
+        $ret = $this->xml_client['pem']->deleteDNSRecord($params);
         $this->checkRestStatus($ret);
         return $ret;
     }
 
     public function registerUserInApplicationInstance(array $params)
     {
-        $ret = $this->xml_APS->registerUserInApplicationInstance($params);
+        $ret =
+            $this->xml_client['pem.APS']
+            ->registerUserInApplicationInstance($params);
         $this->checkRestStatus($ret);
         return $ret;
     }

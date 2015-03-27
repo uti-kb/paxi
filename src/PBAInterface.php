@@ -1,6 +1,6 @@
 <?php
-namespace Hakger\Paxi;
 
+namespace Hakger\Paxi;
 
 /**
  * PBAInterface - biblioteka do xmlrpc
@@ -9,7 +9,6 @@ namespace Hakger\Paxi;
  */
 class PBAInterface
 {
-
     // configuration
 
     /**
@@ -17,8 +16,7 @@ class PBAInterface
      *
      * @var string
      */
-    private $RPC_URL = 'http://192.168.128.78:5224/RPC2';
-
+    private $rpc_url; // = 'http://192.168.128.78:5224/RPC2';
     // implementation
 
     /**
@@ -28,16 +26,28 @@ class PBAInterface
      */
     private $xml_client;
 
-    public function __construct()
+    public function __construct($url = '')
     {
-        $this->xml_client = new XMLRPCClient($this->RPC_URL, '');
+        if (!empty($url) && filter_var($url, FILTER_VALIDATE_URL) !== false) {
+            $this->rpc_url = $url;
+            $this->xml_client = new XMLRPCClient($this->rpc_url, '');
+        }
+    }
+
+    public function setUrl($url)
+    {
+        if (!empty($url) && filter_var($url, FILTER_VALIDATE_URL) !== false) {
+            $this->xml_client = new XMLRPCClient($this->rpc_url, '');
+        } else {
+            throw new PBAException("URL '$url' is invalid!");
+        }
     }
 
     private function checkCnt(&$params, $min_cnt)
     {
         if (count($params) < $min_cnt) {
-            throw new PBAException("Too little params count,
-            needs at least $min_cnt");
+            throw new PBAException("Too little params count," .
+            " needs at least $min_cnt");
         }
     }
 
