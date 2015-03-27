@@ -1,9 +1,6 @@
 <?php
 namespace Hakger\Paxi;
 
-require_once dirname(__FILE__).'/XmlRpcClientException.php';
-
-
 /**
  * XMLRPCClient
  *
