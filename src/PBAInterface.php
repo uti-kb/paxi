@@ -12,17 +12,12 @@ class PBAInterface
     // configuration
 
     /**
-     * tu nalezy podać ip, port i katalog rpc do pba
-     *
-     * @var string
+     * @var string ip, port i katalog rpc do pba
      */
     private $rpc_url; // = 'http://192.168.128.78:5224/RPC2';
-    // implementation
 
     /**
-     * klient xml do głównego namespace.
-     *
-     * @var XMLRPCClient
+     * @var XMLRPCClient klient xml do głównego namespace.
      */
     private $xml_client;
 
