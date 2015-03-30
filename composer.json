@@ -13,7 +13,10 @@
           "email": "g.bernat@hakgersoft.pl"
       }
   ],
-  "require": {},
+  "require": {
+    "php": ">=5.3",
+    "ext-xmlrpc": "*"
+  },
   "require-dev": {},
   "autoload": {
     "psr-4": {
