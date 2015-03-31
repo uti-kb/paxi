@@ -16,7 +16,7 @@
   "require": {
     "php": ">=5.3",
     "ext-xmlrpc": "*",
-    "psr/log": "dev-master"
+    "psr/log": "@dev"
   },
   "require-dev": {},
   "suggest": {
