@@ -2,12 +2,15 @@
 
 namespace Hakger\Paxi;
 
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
+
 /**
  * PBAInterface - biblioteka do xmlrpc
  *
  * @author Hubert Kowalski
  */
-class PBAInterface
+class PBAInterface implements LoggerAwareInterface
 {
     // configuration
 
@@ -21,27 +24,55 @@ class PBAInterface
      */
     private $xml_client;
 
-    public function __construct($url = '')
+    /**
+     * The logger instance.
+     *
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
+     * Sets a logger.
+     *
+     * @param LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
+    public function __construct($url = '', LoggerInterface $logger = null)
     {
         if (!empty($url) && filter_var($url, FILTER_VALIDATE_URL) !== false) {
             $this->rpc_url = $url;
-            $this->xml_client = new XMLRPCClient($this->rpc_url, '');
+            $this->xml_client = new XMLRPCClient(
+                $this->rpc_url,
+                '',
+                false,
+                $logger
+            );
         }
+        $this->logger = $logger;
     }
 
     public function setUrl($url)
     {
         if (!empty($url) && filter_var($url, FILTER_VALIDATE_URL) !== false) {
-            $this->xml_client = new XMLRPCClient($this->rpc_url, '');
+            $this->xml_client = new XMLRPCClient(
+                $this->rpc_url,
+                '',
+                false,
+                $this->logger
+            );
         } else {
-            throw new PBAException("URL '$url' is invalid!");
+            throw new PAException("URL '$url' is invalid!");
         }
     }
 
     private function checkCnt(&$params, $min_cnt)
     {
         if (count($params) < $min_cnt) {
-            throw new PBAException("Too little params count," .
+            throw new PAException("Too little params count," .
             " needs at least $min_cnt");
         }
     }

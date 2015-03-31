@@ -1,7 +1,7 @@
 <?php
 namespace Hakger\Paxi;
 
-class PBAException extends Exception
+class PAException extends \Exception
 {
     // class body
 }

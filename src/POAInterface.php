@@ -2,12 +2,15 @@
 
 namespace Hakger\Paxi;
 
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
+
 /**
  * Description of POAInterface
  *
  * @author Hubert Kowalski
  */
-class POAInterface
+class POAInterface implements LoggerAwareInterface
 {
     // configuration
 
@@ -32,14 +35,35 @@ class POAInterface
      */
     private $xml_client;
 
-    public function __construct($url = '', $api_access = false)
+    /**
+     * The logger instance.
+     *
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
+     * Sets a logger.
+     *
+     * @param LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger)
     {
+        $this->logger = $logger;
+    }
+
+    public function __construct(
+        $url = '',
+        $api_access = false,
+        LoggerInterface $logger = null
+    ) {
         $this->api_access = $api_access;
         $this->rpc_url = '';
         $this->xml_client = array();
         if (!empty($url) && filter_var($url, FILTER_VALIDATE_URL) !== false) {
             $this->rpc_url = $url;
         }
+        $this->logger = $logger;
     }
 
     public function setUrl($url)
@@ -48,7 +72,7 @@ class POAInterface
             $this->rpc_url = $url;
             $this->xml_client = array(); // reset clients array
         } else {
-            throw new PBAException("URL '$url' is invalid!");
+            throw new PAException("URL '$url' is invalid!");
         }
     }
 
@@ -70,7 +94,7 @@ class POAInterface
     private function xmlClient($namespace = '')
     {
         if (empty($this->rpc_url)) {
-            throw new PBAException("URL '$this->rpc_url' is invalid!");
+            throw new PAException("URL '$this->rpc_url' is invalid!");
         }
         $ns = $namespace == '' ? 'pem' : "pem.$namespace";
         if (array_key_exists($ns, $this->xml_client) &&
@@ -81,7 +105,8 @@ class POAInterface
             $this->xml_client[$ns] = new XMLRPCClient(
                 $this->rpc_url,
                 $ns,
-                $this->api_access
+                $this->api_access,
+                $this->logger
             );
         }
         return $this->xml_client[$ns];

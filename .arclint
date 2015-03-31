@@ -65,6 +65,7 @@
         "24": "disabled",
         "34": "error",
         "37": "disabled",
+        "38": "disabled",
         "44": "disabled"
       },
       "xhpast.blacklisted.function": {

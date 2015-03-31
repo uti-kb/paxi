@@ -4,20 +4,24 @@
   "license": "proprietary",
   "keywords": ["PAXI"],
   "authors": [
-      {
-          "name": "Hubert Kowalski",
-          "email": "h.kowalski@hakger.pl"
-      },
-      {
-          "name": "Grzegorz Bernat",
-          "email": "g.bernat@hakgersoft.pl"
-      }
+    {
+      "name": "Hubert Kowalski",
+      "email": "h.kowalski@hakger.pl"
+    },
+    {
+      "name": "Grzegorz Bernat",
+      "email": "g.bernat@hakgersoft.pl"
+    }
   ],
   "require": {
     "php": ">=5.3",
-    "ext-xmlrpc": "*"
+    "ext-xmlrpc": "*",
+    "psr/log": "dev-master"
   },
   "require-dev": {},
+  "suggest": {
+    "monolog/monolog": "Allows more advanced logging of the application flow"
+  },
   "autoload": {
     "psr-4": {
       "Hakger\\Paxi\\": "src"

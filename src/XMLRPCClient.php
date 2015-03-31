@@ -1,12 +1,15 @@
 <?php
 namespace Hakger\Paxi;
 
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
+
 /**
  * XMLRPCClient
  *
  * @author Hubert Kowalski
  */
-class XMLRPCClient
+class XMLRPCClient implements LoggerAwareInterface
 {
 
     protected $url;
@@ -14,14 +17,35 @@ class XMLRPCClient
     protected $clients;
     protected $authorisation = false;
 
-    public function __construct($url, $namespace = '', $authorisation = false)
-    {
+    /**
+     *
+     * @var \Psr\Log\LoggerInterface
+     */
+    protected $logger;
+
+    public function __construct(
+        $url,
+        $namespace = '',
+        $authorisation = false,
+        LoggerInterface $logger = null
+    ) {
         $this->url = (string)$url;
         $this->namespace = (string)$namespace;
         $this->clients = array();
         if ($authorisation) {
             $this->authorisation = base64_encode($authorisation);
         }
+        $this->logger = $logger;
+    }
+
+    /**
+        * Sets a logger.
+        *
+        * @param LoggerInterface $logger
+    */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 
     public function __get($namespace)
@@ -47,7 +71,10 @@ class XMLRPCClient
             $logname .= "({$parameters[0]['Server']}
             -{$parameters[0]['Method']})";
         }
-        error_log("XMLRPC call: $logname");
+
+        if ($this->logger) {
+            $this->logger->info("XMLRPC call: $logname");
+        }
         $request = xmlrpc_encode_request(
             strlen($this->namespace) > 0 ? "$this->namespace.$method" : $method,
             $parameters,
@@ -73,11 +100,9 @@ class XMLRPCClient
         );
         $request = html_entity_decode($request);
 
-        file_put_contents(dirname(__FILE__).'/lastrequest.xml', $request);
-        file_put_contents(
-            dirname(__FILE__)."/logs/{$logname}_call.xml",
-            $request
-        );
+        if ($this->logger) {
+            $this->logger->debug($request);
+        }
         $hdr_end = '';
         if ($this->authorisation) {
             $hdr_end = "\r\nAuthorization: Basic {$this->authorisation}\r\n";
@@ -93,10 +118,9 @@ class XMLRPCClient
         );
 
         $file = file_get_contents($this->url, false, $context);
-        file_put_contents(
-            dirname(__FILE__)."/logs/{$logname}_response.xml",
-            $file
-        );
+        if ($this->logger) {
+            $this->logger->debug($file);
+        }
         $response = xmlrpc_decode($file);
 
         if (!$response) {

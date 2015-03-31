@@ -1,7 +1,7 @@
 <?php
 namespace Hakger\Paxi;
 
-class XmlRpcClientException extends Exception
+class XmlRpcClientException extends \Exception
 {
     public function __construct($message, $code, $previous)
     {
