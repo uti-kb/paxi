@@ -97,9 +97,9 @@ class POAInterface implements LoggerAwareInterface
             throw new PAException("URL '$this->rpc_url' is invalid!");
         }
         $ns = $namespace == '' ? 'pem' : "pem.$namespace";
-        if (array_key_exists($ns, $this->xml_client) &&
+        if (!array_key_exists($ns, $this->xml_client) ||
                 (
-                $this->xml_client[$ns] instanceof \Hakger\Paxi\XMLRPCClient
+                 ! $this->xml_client[$ns] instanceof \Hakger\Paxi\XMLRPCClient
                 )
             ) {
             $this->xml_client[$ns] = new XMLRPCClient(
