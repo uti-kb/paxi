@@ -259,4 +259,11 @@ class POAInterface implements LoggerAwareInterface
         $this->checkRestStatus($ret);
         return $ret;
     }
+
+    public function checkPassword(array $params)
+    {
+        $ret = $this->xmlClient()->checkPassword($params);
+        $this->checkRestStatus($ret);
+        return $ret;
+    }
 }
