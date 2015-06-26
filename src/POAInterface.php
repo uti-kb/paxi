@@ -266,4 +266,18 @@ class POAInterface implements LoggerAwareInterface
         $this->checkRestStatus($ret);
         return $ret;
     }
+
+    public function changeUserPassword(array $params)
+    {
+        $ret = $this->xmlClient()->changeUserPassword($params);
+        $this->checkRestStatus($ret);
+        return $ret;
+    }
+
+    public function getUserInfo(array $params)
+    {
+        $ret = $this->xmlClient()->getUserInfo($params);
+        $this->checkRestStatus($ret);
+        return $ret;
+    }
 }
