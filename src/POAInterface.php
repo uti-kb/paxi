@@ -260,6 +260,30 @@ class POAInterface implements LoggerAwareInterface
         return $ret;
     }
 
+    public function getSubscriptionApplicationInstances(array $params)
+    {
+        $ret = $this->xmlClient('APS')
+            ->getSubscriptionApplicationInstances($params);
+        $this->checkRestStatus($ret);
+        return $ret;
+    }
+
+    public function getApplicationInstanceServiceResourceTypes(array $params)
+    {
+        $ret = $this->xmlClient('APS')
+            ->getApplicationInstanceServiceResourceTypes($params);
+        $this->checkRestStatus($ret);
+        return $ret;
+    }
+
+    public function getApplications(array $params)
+    {
+        $ret = $this->xmlClient('APS')
+            ->getApplications($params);
+        $this->checkRestStatus($ret);
+        return $ret;
+    }
+
     public function checkPassword(array $params)
     {
         $ret = $this->xmlClient()->checkPassword($params);
