@@ -31,7 +31,7 @@ class POAInterface implements LoggerAwareInterface
     // implementation
 
     /**
-     * @var Array Array klientów xmlRpc.
+     * @var Array Tablica klientów xmlRpc.
      */
     private $xml_client;
 
@@ -248,6 +248,27 @@ class POAInterface implements LoggerAwareInterface
     public function delDNSRecord(array $params)
     {
         $ret = $this->xmlClient()->deleteDNSRecord($params);
+        $this->checkRestStatus($ret);
+        return $ret;
+    }
+
+    public function enableDNSRecord(array $params)
+    {
+        $ret = $this->xmlClient()->enableDNSRecord($params);
+        $this->checkRestStatus($ret);
+        return $ret;
+    }
+
+    public function disableDNSRecord(array $params)
+    {
+        $ret = $this->xmlClient()->disableDNSRecord($params);
+        $this->checkRestStatus($ret);
+        return $ret;
+    }
+
+    public function getDNSRecords(array $params)
+    {
+        $ret = $this->xmlClient()->getDNSRecords($params);
         $this->checkRestStatus($ret);
         return $ret;
     }
