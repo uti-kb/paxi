@@ -147,6 +147,13 @@ class POAInterface implements LoggerAwareInterface
         return $ret;
     }
 
+    public function getDomainByName(array $params)
+    {
+        $ret = $this->xmlClient()->getDomainByName($params);
+        $this->checkRestStatus($ret);
+        return $ret;
+    }
+
     public function addMailbox(array $params)
     {
         $ret = $this->xmlClient('cqmail')->addMailbox($params);
