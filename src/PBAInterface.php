@@ -311,6 +311,8 @@ class PBAInterface implements LoggerAwareInterface
         return $this->xml_client->Execute($request);
     }
 
+    // KAGATE - For Key Account Manager
+
     public function addKAAddon(array $params = array())
     {
         $min_cnt = 2;

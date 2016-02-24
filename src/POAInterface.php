@@ -332,4 +332,11 @@ class POAInterface implements LoggerAwareInterface
         $this->checkRestStatus($ret);
         return $ret;
     }
+
+    public function getVendorCustomers(array $params)
+    {
+        $ret = $this->xmlClient()->getVendorCustomers($params);
+        $this->checkRestStatus($ret);
+        return $ret;
+    }
 }
