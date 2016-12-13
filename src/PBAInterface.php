@@ -232,6 +232,19 @@ class PBAInterface implements LoggerAwareInterface
         );
         return $this->xml_client->Execute($request);
     }
+    
+    public function addDomainExtData(array $params = array())
+    {
+        $min_cnt = 3;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'DOMAINGATE',
+            'Method' => 'DomainExtDataAdd_API',
+            'Lang' => 'pl',
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
 
     public function addPEMDomainForSubscription(array $params = array())
     {
