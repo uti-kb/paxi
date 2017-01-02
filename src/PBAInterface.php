@@ -271,6 +271,19 @@ class PBAInterface implements LoggerAwareInterface
         );
         return $this->xml_client->Execute($request);
     }
+    
+    public function getObjAttrList(array $params = array())
+    {
+        $min_cnt = 3;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'BM',
+            'Method' => 'GetObjAttrList_API',
+            'Lang' => 'pl',
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
 
     public function getPlanCategoryList(array $params = array())
     {
