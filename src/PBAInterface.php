@@ -89,6 +89,19 @@ class PBAInterface implements LoggerAwareInterface
         );
         return $this->xml_client->Execute($request);
     }
+    
+    public function adjustAccountBalance(array $params = array())
+    {
+        $min_cnt = 2;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'BM',
+            'Method' => 'AccountBalanceAdjust_API',
+            'Lang' => 'pl',
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
 
     public function addAccountMember(array $params = array())
     {
