@@ -121,7 +121,14 @@ class XMLRPCClient implements LoggerAwareInterface
         if ($this->logger) {
             $this->logger->debug($file);
         }
-        $response = xmlrpc_decode($file);
+        if (strpos($file, chr(0xF3))!==false) { // FIX 'ó'
+            $file = str_replace(chr(0xF3), 'ó', $file);
+        }
+        if (strpos($file, chr(0xD3))!==false) { // FIX 'Ó'
+            $file = str_replace(chr(0xD3), 'Ó', $file);
+        }
+        
+        $response = xmlrpc_decode($file, 'utf-8');
 
         if (!$response) {
             throw new XmlRpcClientException(array(

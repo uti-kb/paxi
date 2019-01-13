@@ -89,6 +89,19 @@ class PBAInterface implements LoggerAwareInterface
         );
         return $this->xml_client->Execute($request);
     }
+    
+    public function adjustAccountBalance(array $params = array())
+    {
+        $min_cnt = 2;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'BM',
+            'Method' => 'AccountBalanceAdjust_API',
+            'Lang' => 'pl',
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
 
     public function addAccountMember(array $params = array())
     {
@@ -155,6 +168,58 @@ class PBAInterface implements LoggerAwareInterface
         return $this->xml_client->Execute($request);
     }
 
+    public function getAccountDetailsEx(array $params = array())
+    {
+        $min_cnt = 1;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'BM',
+            'Method' => 'AccountDetailsGetEx_API',
+            'Lang' => 'pl',
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
+
+    public function getExtendedAccountDetails(array $params = array())
+    {
+        $min_cnt = 1;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'BM',
+            'Method' => 'AccountExtendedDetailsGet_API',
+            'Lang' => 'pl',
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
+
+    public function getAccountUsersList(array $params = array())
+    {
+        $min_cnt = 2;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'BM',
+            'Method' => 'GetUsersListForAccount_API',
+            'Lang' => 'pl',
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
+
+    public function getUserDetails(array $params = array())
+    {
+        $min_cnt = 1;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'BM',
+            'Method' => 'UserDetailsGet_API',
+            'Lang' => 'pl',
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
+
     public function addPEMSubscription(array $params = array())
     {
         $min_cnt = 19;
@@ -175,6 +240,19 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'DOMAINGATE',
             'Method' => 'DomainSubscrAdd_API',
+            'Lang' => 'pl',
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
+    
+    public function addDomainExtData(array $params = array())
+    {
+        $min_cnt = 3;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'DOMAINGATE',
+            'Method' => 'DomainExtDataAdd_API',
             'Lang' => 'pl',
             'Params' => $params,
         );
@@ -206,6 +284,138 @@ class PBAInterface implements LoggerAwareInterface
         );
         return $this->xml_client->Execute($request);
     }
+    
+    public function getObjAttrList(array $params = array())
+    {
+        $min_cnt = 3;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'BM',
+            'Method' => 'GetObjAttrList_API',
+            'Lang' => 'pl',
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
+
+    public function getPlanCategoryList(array $params = array())
+    {
+        $min_cnt = 2;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'BM',
+            'Method' => 'PlanCategoryListGet_API',
+            'Lang' => 'pl',
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
+
+    public function getSalesCategoryList(array $params = array())
+    {
+        $min_cnt = 2;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'BM',
+            'Method' => 'SalesCategoryListGet_API',
+            'Lang' => 'pl',
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
+
+    public function getDomainPlanList(array $params = array())
+    {
+        $min_cnt = 3;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'DOMAINGATE',
+            'Method' => 'DomainPlanListAvailableGet_API',
+            'Lang' => 'pl',
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
+
+    public function checkSingleDomainAvailability(array $params = array())
+    {
+        $min_cnt = 5;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'DOMAINGATE',
+            'Method' => 'SingleDomainNameAvailability_API',
+            'Lang' => 'pl',
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
+
+    public function checkMultipleDomainAvailability(array $params = array())
+    {
+        $min_cnt = 4;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'DOMAINGATE',
+            'Method' => 'DomainNamesAvailability_API',
+            'Lang' => 'pl',
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
+
+    public function getPlanDetails(array $params = array())
+    {
+        $min_cnt = 1;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'BM',
+            'Method' => 'PlanDetailsGet_API',
+            'Lang' => 'pl',
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
+
+    public function getDomainPlanDetails(array $params = array())
+    {
+        $min_cnt = 1;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'DOMAINGATE',
+            'Method' => 'DomainPlanGet_API',
+            'Lang' => 'pl',
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
+
+    public function getDomainPlanPeriods(array $params = array())
+    {
+        $min_cnt = 2;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'DOMAINGATE',
+            'Method' => 'DomainPlanPeriodListGet_API',
+            'Lang' => 'pl',
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
+
+    public function getDomainInfo(array $params = array())
+    {
+        $min_cnt = 1;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'DOMAINGATE',
+            'Method' => 'DomainInfoGet_API',
+            'Lang' => 'pl',
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
+
+    // KAGATE - For Key Account Manager
 
     public function addKAAddon(array $params = array())
     {
