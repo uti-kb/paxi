@@ -426,6 +426,32 @@ class PBAInterface implements LoggerAwareInterface
         return $this->xml_client->Execute($request);
     }
 
+    public function getFullDomainZoneList(array $params=array())
+    {
+        $min_cnt = 2;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'DOMAINGATE',
+            'Method' => 'GetFullDomainZoneList_API',
+            'Lang' => $this->lang,
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
+
+    public function getDomainTransferKeyIsRequired(array $params = array())
+    {
+        $min_cnt = 1;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'DOMAINGATE',
+            'Method' => 'DomainTransferKeyIsRequired_API',
+            'Lang' => $this->lang,
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
+
     // KAGATE - For Key Account Manager
 
     public function addKAAddon(array $params = array())
