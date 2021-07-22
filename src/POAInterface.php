@@ -16,13 +16,13 @@ class POAInterface implements LoggerAwareInterface
 
     /**
      *
-     * @var string ip, port i katalog rpc do poa
+     * @var string ip, port and directory rpc to poa
      */
     private $rpc_url; // = 'http://192.168.128.91:8440/RPC2';
 
     /**
-     * tu należy podać dane do logowania do api w formacie "user:pass"
-     * lub false w przypadku braku wymagania logowania
+     * login data in "user:pass" form
+     * or false in case no authentication needed
      *
      * @var string|boolean
      */
@@ -31,7 +31,7 @@ class POAInterface implements LoggerAwareInterface
     // implementation
 
     /**
-     * @var Array Tablica klientów xmlRpc.
+     * @var Array xmlRpc clients array.
      */
     private $xml_client;
 
@@ -86,9 +86,9 @@ class POAInterface implements LoggerAwareInterface
     }
 
     /**
-     * Odolaj sie do odpowiedniej metody klienta XMLRPC
+     * Call appropriate XMLRPC method
      *
-     * @param string $namespace przestrzen nazw funkcji POA
+     * @param string $namespace POA method namespace
      * @return \Hakger\Paxi\XMLRPCClient
      */
     private function xmlClient($namespace = '')
