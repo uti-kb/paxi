@@ -6,7 +6,7 @@ use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 
 /**
- * PBAInterface - biblioteka do xmlrpc
+ * PBAInterface - xmlrpc lib
  *
  * @author Hubert Kowalski
  */
@@ -15,14 +15,19 @@ class PBAInterface implements LoggerAwareInterface
     // configuration
 
     /**
-     * @var string ip, port i katalog rpc do pba
+     * @var string ip, port and directory for pba connectin
      */
     private $rpc_url; // = 'http://192.168.128.78:5224/RPC2';
 
     /**
-     * @var XMLRPCClient klient xml do głównego namespace.
+     * @var XMLRPCClient main xmlrpc client.
      */
     private $xml_client;
+
+    /**
+     * @var string language code
+     */
+    private $lang;
 
     /**
      * The logger instance.
@@ -53,6 +58,7 @@ class PBAInterface implements LoggerAwareInterface
             );
         }
         $this->logger = $logger;
+        $this->lang = 'en';
     }
 
     public function setUrl($url)
@@ -67,6 +73,11 @@ class PBAInterface implements LoggerAwareInterface
         } else {
             throw new PAException("URL '$url' is invalid!");
         }
+    }
+
+    public function setLang($lang)
+    {
+        $this->lang = $lang;
     }
 
     private function checkCnt(&$params, $min_cnt)
@@ -84,7 +95,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'BM',
             'Method' => 'AccountAdd_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -97,7 +108,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'BM',
             'Method' => 'AccountBalanceAdjust_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -110,7 +121,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'BM',
             'Method' => 'UserAdd_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -123,7 +134,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'BM',
             'Method' => 'UserRemove_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -136,7 +147,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'BM',
             'Method' => 'AccountUpdate_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -149,7 +160,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'BM',
             'Method' => 'UserUpdate_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -162,7 +173,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'BM',
             'Method' => 'AccountDetailsGet_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -175,7 +186,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'BM',
             'Method' => 'AccountDetailsGetEx_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -188,7 +199,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'BM',
             'Method' => 'AccountExtendedDetailsGet_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -201,7 +212,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'BM',
             'Method' => 'GetUsersListForAccount_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -214,7 +225,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'BM',
             'Method' => 'UserDetailsGet_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -227,7 +238,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'PEMGATE',
             'Method' => 'AddPEMSubscription_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -240,7 +251,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'DOMAINGATE',
             'Method' => 'DomainSubscrAdd_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -253,7 +264,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'DOMAINGATE',
             'Method' => 'DomainExtDataAdd_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -266,7 +277,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'PEMGATE',
             'Method' => 'AddPEMDomainForSubscription_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -279,7 +290,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'BM',
             'Method' => 'UpdateObjAttrList_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -292,7 +303,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'BM',
             'Method' => 'GetObjAttrList_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -305,7 +316,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'BM',
             'Method' => 'PlanCategoryListGet_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -318,7 +329,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'BM',
             'Method' => 'SalesCategoryListGet_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -331,7 +342,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'DOMAINGATE',
             'Method' => 'DomainPlanListAvailableGet_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -344,7 +355,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'DOMAINGATE',
             'Method' => 'SingleDomainNameAvailability_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -357,7 +368,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'DOMAINGATE',
             'Method' => 'DomainNamesAvailability_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -370,7 +381,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'BM',
             'Method' => 'PlanDetailsGet_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -383,7 +394,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'DOMAINGATE',
             'Method' => 'DomainPlanGet_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -396,7 +407,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'DOMAINGATE',
             'Method' => 'DomainPlanPeriodListGet_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -409,7 +420,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'DOMAINGATE',
             'Method' => 'DomainInfoGet_API',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -424,7 +435,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'KAGATE',
             'Method' => 'KA_AddonAdd',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -437,7 +448,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'KAGATE',
             'Method' => 'KA_AddonMoveToArc',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -450,7 +461,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'KAGATE',
             'Method' => 'KA_FeatureGroupAdd',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -463,7 +474,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'KAGATE',
             'Method' => 'KA_FeatureGroupMoveToArc',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -476,7 +487,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'KAGATE',
             'Method' => 'KA_UpgradeAdd',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
@@ -489,7 +500,7 @@ class PBAInterface implements LoggerAwareInterface
         $request = array(
             'Server' => 'KAGATE',
             'Method' => 'KA_UpgradeMoveToArc',
-            'Lang' => 'pl',
+            'Lang' => $this->lang,
             'Params' => $params,
         );
         return $this->xml_client->Execute($request);
