@@ -348,6 +348,44 @@ class PBAInterface implements LoggerAwareInterface
         return $this->xml_client->Execute($request);
     }
 
+    public function cancelAllSubsForAccount(array $params = array())
+    {
+        $min_cnt = 4;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'BM',
+            'Method' => 'CancelAllSubscriptionsForAccount_API',
+            'Lang' => $this->lang,
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
+
+    public function cancelSubscription(array $params = array())
+    {
+        $min_cnt = 4;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'BM',
+            'Method' => 'PlaceSubscriptionCancellationOrder_API',
+            'Lang' => $this->lang,
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
+
+    public function cancelAccount(array $params = array())
+    {
+        $min_cnt = 3;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'BM',
+            'Method' => 'PlaceAccountCancellationOrder_API',
+            'Lang' => $this->lang,
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
 
     //domaingate functions
 
