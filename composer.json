@@ -14,9 +14,9 @@
     }
   ],
   "require": {
-    "php": ">=5.3",
-    "ext-xmlrpc": "*",
-    "psr/log": "@dev"
+    "php": ">=8.0",
+    "phpxmlrpc/polyfill-xmlrpc": "1.0.0-rc1",
+    "psr/log": "^3.0.0"
   },
   "require-dev": {},
   "suggest": {
