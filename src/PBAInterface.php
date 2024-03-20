@@ -610,4 +610,17 @@ class PBAInterface implements LoggerAwareInterface
         );
         return $this->xml_client->Execute($request);
     }
+
+    public function getCustomerSubscriptionList(array $params = array())
+    {
+        $min_cnt = 1;
+        $this->checkCnt($params, $min_cnt);
+        $request = array(
+            'Server' => 'BM',
+            'Method' => 'GetCustomerSubscriptionList_API',
+            'Lang' => $this->lang,
+            'Params' => $params,
+        );
+        return $this->xml_client->Execute($request);
+    }
 }
